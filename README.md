@@ -4,6 +4,8 @@ This is the repository used by Gukyeong Jung and Yohan Bae for solving algorithm
   
 
 ## File name format
-    Website - Problem name - person`s name
+    (Website)_(Problem name or number)_(person`s name).c
     
-    ex) Algospot - PICNIC - Johnbae93
+    All letters must be in lower case.
+    
+    ex) algospot_picnic_johnbae93.c
