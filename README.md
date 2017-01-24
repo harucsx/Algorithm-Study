@@ -1,5 +1,5 @@
 # Algorithm-Study
-This repository belonged to Gukyeong Jung and Yohan Bae is for solving algorithmic problems.  
+This repository belonged to Gukyeong Jung, Yohan Bae and Likyung Han is for solving algorithmic problems.  
   
   
 ## File name format
