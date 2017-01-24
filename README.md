@@ -5,6 +5,6 @@ This repository belonged to Gukyeong Jung, Yohan Bae and Likyung Han is for solv
 ## File name format
     (Website)/(Problem name or number)_(username).c
     
-    All characters must be in lowercase except for the first letter of the website name.
+    All characters must be in lowercase.
     
-    ex) Algospot/picnic_johnbae93.c
+    ex) algospot/picnic_johnbae93.c
