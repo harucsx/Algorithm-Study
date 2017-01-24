@@ -7,4 +7,4 @@ This repository belonged to Gukyeong Jung, Yohan Bae and Likyung Han is for solv
     
     All characters must be in lowercase except for the first letter of the website name.
     
-    ex) algospot/picnic_johnbae93.c
+    ex) Algospot/picnic_johnbae93.c
