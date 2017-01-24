@@ -1,5 +1,4 @@
 .idea/
-.idea/*
 CMakeLists.txt
 cpplint
 cpplint.cmd
