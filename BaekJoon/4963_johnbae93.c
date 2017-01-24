@@ -27,7 +27,6 @@ int findLand(int w, int h) {
 				sol++;
 				dfs(i, j, w, h);
 			}
-
 		}
 	}
 	return sol;
