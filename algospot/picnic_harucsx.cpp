@@ -32,9 +32,6 @@ int count_pair(int num_student, bool pair[10][10], bool finished[10]) {
 }
 
 int main(int argc, char **argv) {
-    freopen("input.txt", "r", stdin);
-    setbuf(stdout, NULL);
-
     int TC;
 
     cin >> TC;
