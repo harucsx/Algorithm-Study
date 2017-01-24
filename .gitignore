@@ -1,5 +1,11 @@
 .idea/
 .idea/*
+CMakeLists.txt
+cpplint
+cpplint.cmd
+cpplint.py
+practice.txt
+cmake-build-debug/
 
 # Object files
 *.o
