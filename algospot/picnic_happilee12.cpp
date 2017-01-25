@@ -2,115 +2,56 @@
 // Created by HANLEEKYEUNG on 2017. 1. 25..
 //
 
-//
-// Created by HANLEEKYEUNG on 2017. 1. 25..
-//
-
 #include <iostream>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 using namespace std;
 
-int student;
-int numOfPair;
-int pair[10][10];
-int unused[10];
-int a, b;
-int total;
+int makePair(bool matched[10], bool pair[10][10], int numPeople){
+    int p1 = -1;
+    int result = 0;
+    for(int i=0; i<numPeople; i++){
+        if(!matched[i]){
+            p1 = i;
+            break;
+        }
+    }
+    if(p1 == -1){
+        return 1;
+    }
+    for(int p2 = p1+1; p2<numPeople; p2++){
+        if(!matched[p2] && pair[p1][p2]){
+            matched[p1] = matched[p2] = true;
+            result += makePair(matched, pair, numPeople);
+            matched[p1] = matched[p2] = false;
+        }
+    }
 
-void makepair();
-void seek(int a, int b, int *unused);
-void match(int a, int b, int *unused);
-void printUnused(int *unused);
-int check(int* unused);
+    return result;
+}
 
-int main() {
+int main(){
     freopen("input.txt", "r", stdin);
-    int a, b;
-    int test;
-    cin >> test;
+    int tc;
+    cin >> tc;
 
-    //testcases
-    for(int n = 0; n<test; n++) {
-        total = 0;
-        cin >> student >> numOfPair;
+    for(int i=0; i<tc; i++){
+        bool matched[10];
+        bool pair[10][10];
+        int numPeople, numPair;
 
-        memset(unused, 0, sizeof(unused));
-        for (int i = 0; i < student; i++)
-            memset(::pair[i], 0, sizeof(::pair[i]));
+        cin >> numPeople >> numPair;
+        memset(matched, 0, 10);
+        memset(pair, 0, 100);
 
-        //input으로 pair만들기
-        makepair();
+        for(int j = 0; j<numPair; j++){
+            int p1, p2;
+            cin >> p1 >> p2;
 
-        //0에 대해 매치 찾기
-        for (int i = 1; i < student; i++) {
-            match(0, i, unused);
+            pair[p1][p2] = pair[p1][p2] = true;
         }
 
-        cout << total <<endl;
+        cout << makePair(matched, pair, numPeople) << endl;
     }
-}
-
-void makepair(){
-    //pair 배열
-    for (int j = 0; j < numOfPair; j++) {
-        cin >> a >> b;
-
-        //작은걸 a에
-        if (a > b) {
-            int temp = b;
-            b = a;
-            a = temp;
-        }
-
-        ::pair[a][b] = 1;
-    }
-}
-
-void seek(int a, int b, int *unused){
-    //새로운 unused
-    int nUsd[10];
-    for(int i =0 ; i< student; i++)
-        nUsd[i] = unused[i];
-    nUsd[a] = 1;
-    nUsd[b] = 1;
-
-    //매칭 끝일 경우
-    if(check(nUsd) == 0){
-        total++;
-        return;
-    }
-
-    //다음 매칭
-    for(int i=a+1; i<student; i++){ //a 이전꺼는 이미 셈
-        if(nUsd[i]==1) continue;
-        for(int j=i+1; j<student; j++){
-            if(nUsd[j]==1) continue;
-            //매치 되는지 찾기
-            match(i, j, nUsd);
-        }
-    }
-}
-
-void match(int a, int b, int *unused){
-    if(unused[a] == 0 && unused[b] == 0 && ::pair[a][b] == 1){
-        //매치되면 이걸로 또 찾음
-        seek(a, b, unused);
-    }
-    else return;
-}
-void printUnused(int *unused){
-    cout << "unused :: ";
-    for(int i = 0; i<student; i++){
-        cout <<unused[i] << " ";
-    }
-    cout << endl;
-}
-
-int check(int* unused){
-    for(int i=0; i<::student; i++){
-        if(unused[i] == 0)
-            return 1;
-    }
-    return 0;
 }
