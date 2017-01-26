@@ -1,10 +1,9 @@
 //
 // Created by HANLEEKYEUNG on 2017. 1. 26..
+//오답이에요
+//
 //
 
-//
-// Created by HANLEEKYEUNG on 2017. 1. 25..
-//
 
 #include <iostream>
 #include <cstdio>
