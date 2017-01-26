@@ -2,9 +2,6 @@
 // Created by HANLEEKYEUNG on 2017. 1. 26..
 //
 
-//
-// Created by HANLEEKYEUNG on 2017. 1. 25..
-//
 
 #include <iostream>
 #include <cstdio>
@@ -12,7 +9,7 @@
 
 using namespace std;
 
-void printBoard(int wh, int ht, int board[20][20]){
+void printBoard(int wh, int ht, int board[22][22]){
     for(int i=0; i<ht; i++){
         for(int j=0; j<wh; j++)
             cout << board[i][j];
@@ -20,7 +17,7 @@ void printBoard(int wh, int ht, int board[20][20]){
     }
 }
 
-int fillBorad(int wh, int ht, int board[20][20]) {
+int fillBorad(int wh, int ht, int board[22][22]) {
     int result = 0;
     int x = -1, y = -1;
     int a = -1, b = -1;
@@ -44,35 +41,35 @@ int fillBorad(int wh, int ht, int board[20][20]) {
     if( !(board[x+1][y] && board[x+1][y+1]) && !(board[x][y+1] && board[x+1][y+1]) && !(board[x][y+1] && board[x+1][y]) &&!(board[x+1][y] && board[x+1][y-1]))
         return result;
 
-    cout << "------------------" << endl;
-    cout << "(x, y) : (" << x <<", " << y <<")" <<endl;
-    printBoard(wh, ht, board);
+//    cout << "------------------" << endl;
+//    cout << "(x, y) : (" << x <<", " << y <<")" <<endl;
+//    printBoard(wh, ht, board);
 
 
     //case1 :: ㄴ
     if(board[x+1][y] && board[x+1][y+1]) {
-        cout << " => case 1 " <<endl;
+//        cout << " => case 1 " <<endl;
         board[x][y] = board[x+1][y] = board[x+1][y+1] = 0;
         result += fillBorad(wh, ht, board);
         board[x][y] = board[x+1][y] = board[x+1][y+1] = 1;
     }
     //case2 :: ㄱ
     if(board[x][y+1] && board[x+1][y+1]) {
-        cout << " => case 2 " <<endl;
+//        cout << " => case 2 " <<endl;
         board[x][y] = board[x][y+1] = board[x+1][y+1] = 0;
         result += fillBorad(wh, ht, board);
         board[x][y] = board[x][y+1] = board[x+1][y+1] = 1;
     }
     //case3 :: |-
     if(board[x][y+1] && board[x+1][y]) {
-        cout << " => case 3 " <<endl;
+//        cout << " => case 3 " <<endl;
         board[x][y] = board[x][y+1] = board[x+1][y] = 0;
         result += fillBorad(wh, ht, board);
         board[x][y] = board[x][y+1] = board[x+1][y] = 1;
     }
     //case4 :: _|
     if(board[x+1][y] && board[x+1][y-1]) {
-        cout << " => case 4 " <<endl;
+//        cout << " => case 4 " <<endl;
         board[x][y] = board[x+1][y] = board[x+1][y-1] = 0;
         result += fillBorad(wh, ht, board);
         board[x][y] = board[x+1][y] = board[x+1][y-1] = 1;
@@ -87,12 +84,11 @@ int main(){
     cin >> tc;
 
     for(int i=0; i<tc; i++){
-        int board[20][20];
+        int board[22][22] = {0, };
         int wh, ht;
         int sum =0;
         string line;
         cin >> ht >> wh;
-        memset(board, 0, 400);
 
         for(int i=0; i<ht; i++) {
             cin >> line;
