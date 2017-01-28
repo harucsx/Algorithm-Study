@@ -41,11 +41,6 @@ int fillBorad(int wh, int ht, int board[22][22]) {
     if( !(board[x+1][y] && board[x+1][y+1]) && !(board[x][y+1] && board[x+1][y+1]) && !(board[x][y+1] && board[x+1][y]) &&!(board[x+1][y] && board[x+1][y-1]))
         return result;
 
-//    cout << "------------------" << endl;
-//    cout << "(x, y) : (" << x <<", " << y <<")" <<endl;
-//    printBoard(wh, ht, board);
-
-
     //case1 :: ㄴ
     if(board[x+1][y] && board[x+1][y+1]) {
 //        cout << " => case 1 " <<endl;

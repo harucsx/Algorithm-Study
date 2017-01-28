@@ -55,11 +55,6 @@ bool everyClock(int board[16][10], int times[11], int target[16]){
         }
     }
 }
-void times3(int board[16][10]){
-    for(int i=0; i<16; i++)
-        for(int j=0; j<10; j++)
-            board[i][j] = board[i][j]*3;
-}
 
 int main(){
 //    freopen("input.txt", "r", stdin);
@@ -86,7 +81,9 @@ int main(){
             {0, 0, 1, 0, 0, 1, 1, 1, 0, 0}
             //8-12, 14-15
     };
-    times3(board);
+    for(int i=0; i<16; i++)
+        for(int j=0; j<10; j++)
+            board[i][j] = board[i][j]*3;
     int tc;
     cin >> tc;
 
@@ -102,9 +99,6 @@ int main(){
             target[j] = (input/3)%4;
         }
 
-//        ***
-//        cout << "target : ";
-//        printArray(target, 16);
 
         while(times[10]==0){
             if(everyClock(board, times, target)) {
