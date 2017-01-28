@@ -7,7 +7,6 @@
 using namespace std;
 
 string reverse(string &input, string output){
-//    cout << input << endl;
     string first = {};
     string next = {};
     if(input.length()==1) return input;
@@ -30,7 +29,6 @@ string reverse(string &input, string output){
     }
 }
 int main(){
-//    freopen("input.txt", "r", stdin);
     int tc;
     scanf("%d ",&tc);
     for(int i=0; i<tc; i++){
