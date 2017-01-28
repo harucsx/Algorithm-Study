@@ -55,23 +55,6 @@ bool everyClock(int board[16][10], int times[11], int target[16]){
         }
     }
 }
-
-bool checkClock(int board[16][10], int times[11], int target[16]){
-    int check[16];
-    initArray(check,16);
-
-    for(int i=0; i<16; i++){
-        int temp = 0;
-        for(int j = 0; j < 10; j++)
-            temp += board[i][j]*times[j];
-        if(temp != target[i])
-            return false;
-        check[i] = temp;
-    }
-//    printArray(check, 16);
-    return true;
-}
-
 void times3(int board[16][10]){
     for(int i=0; i<16; i++)
         for(int j=0; j<10; j++)
