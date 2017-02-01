@@ -21,19 +21,21 @@ int get_diff(string number) {
         return 1;
 
     if (s.size() == number.size()) {
-        bool diff2 = true;
+        bool diff2or5 = true;
 
         int sub = chartoi(number[0]) - chartoi(number[1]);
-        if (sub == 1 || sub == -1) {
-            for (int i = 1; i < number.size() - 1; ++i) {
-                if (chartoi(number[i]) - chartoi(number[i + 1]) != sub) {
-                    diff2 = false;
-                    break;
-                }
+        for (int i = 1; i < number.size() - 1; ++i) {
+            if (chartoi(number[i]) - chartoi(number[i + 1]) != sub) {
+                diff2or5 = false;
+                break;
             }
+        }
 
-            if (diff2)
+        if (diff2or5) {
+            if (sub == 1 || sub == -1)
                 return 2;
+            else
+                return 5;
         }
     }
 
@@ -50,20 +52,6 @@ int get_diff(string number) {
 
         if (diff4)
             return 4;
-    }
-
-    if (s.size() == number.size()) {
-        bool diff5 = true;
-        int sub = chartoi(number[0]) - chartoi(number[1]);
-        for (int i = 1; i < number.size() - 1; ++i) {
-            if (chartoi(number[i]) - chartoi(number[i + 1]) != sub) {
-                diff5 = false;
-                break;
-            }
-        }
-
-        if (diff5)
-            return 5;
     }
 
     return 10;
