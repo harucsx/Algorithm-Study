@@ -63,6 +63,7 @@ int main(){
             scanf("%d", &tmp);
             v.push_back(tmp);
         }
+
         int sol = 999;
         findSol(v, &sol, 0, 0);
         if (sol == 999) sol = -1;
