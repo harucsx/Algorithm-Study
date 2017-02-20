@@ -74,7 +74,6 @@ int fillBorad(int wh, int ht, int board[22][22]) {
 }
 
 int main(){
-    freopen("input.txt", "r", stdin);
     int tc;
     cin >> tc;
 
