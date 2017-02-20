@@ -74,3 +74,62 @@ int main(void){
     }
     return 0;
 }
+
+//#include<iostream>
+//#include<vector>
+//#include <limits.h>
+//
+//using namespace std;
+//
+//string N;
+//int cache[10002];
+//
+//int classify(int a, int b){
+//    string M = N.substr(a, b-a+1);
+//    //모두 같음
+//    if(M == string(M.size(), M[0])) return 1;
+//    //등차수열
+//    bool progressive = true;
+//    for(int i = 0 ; i < M.size()-1; ++i)
+//        if(M[i+1]-M[i]!=M[1]-M[0])
+//            progressive = false;
+//    //등차수열이고 공차가 1 또는 -1
+//    if(progressive && abs(M[1]-M[0]) == 1)
+//        return 2;
+//    bool alternating = true;
+//    for(int i = 0 ; i< M.size(); ++i)
+//        if(M[i] != M[i%2])
+//            alternating = false;
+//    if(alternating) return 4;
+//    if(progressive) return 5;
+//    return 10;
+//}
+//
+//int memorize(int begin){
+//    cout<< begin;
+//    if(begin == N.size()){
+//        return 0;
+//    }
+//    int& ret = cache[begin];
+//    if(ret != -1){
+//        cout<< "here1"<<endl;
+//        return ret;
+//    }
+//    ret = INT_MAX;
+//    for(int L = 3; L<=5; L++)
+//        if(begin + L <= N.size())
+//            ret = min(ret, memorize(begin+L)+classify(begin, begin+L-1));
+//    return ret;
+//}
+//
+//int main(void){
+//    freopen("input.txt", "r", stdin);
+//    int tc;
+//    scanf("%d ",&tc);
+//    while(tc-- > 0){
+//        memset(cache, 0, 10002);
+//        cin >> N;
+//        cout << memorize(0) << endl;
+//    }
+//    return 0;
+//}
