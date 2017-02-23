@@ -11,10 +11,9 @@ int move_y[2] = {0, 1};
 
 void findSol(int x, int y, int map[100][100], int sum[100][100], int size) {
     if(x >= size) return;
+    if(x == size -1) return;
 
     int current = sum[x][y];
-
-    if(x == size -1) return;
 
     for (int i = 0; i < 2; ++i) {
         if(sum[x + move_x[i]][y + move_y[i]] < current + map[x + move_x[i]][y + move_y[i]]) {
