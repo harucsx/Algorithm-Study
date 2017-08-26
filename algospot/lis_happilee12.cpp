@@ -34,7 +34,6 @@ int main(void){
             cin >> cinnum;
             input.push_back(cinnum);
             //입력
-
             for(auto it = cache.begin(); it != cache.end(); it++){
                 if(cinnum < *it) {
                     *it = cinnum;
@@ -43,10 +42,7 @@ int main(void){
                 if(it == cache.end()-1 && cinnum > *it)
                     cache.push_back(cinnum);
             }
-
         }
         cout << cache.size() << endl;
-
     }
-
 }
