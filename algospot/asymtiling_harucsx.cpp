@@ -1,3 +1,7 @@
+/*
+ *  개멍청하게 똑같은 계산 2번했음 수정 요망
+ */
+
 #include <cstdio>
 #include <iostream>
 #include <vector>
