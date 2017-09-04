@@ -1,26 +1,42 @@
-//
-// 시간초과............ㅠㅠ
-//
-
 #include<iostream>
-#include<vector>
-
+#include<math.h>
+#include <vector>
+#include <algorithm>
+#define FOR(a, max) for(int a=0; a<max; a++)
 using namespace std;
+
+int testcase;
+string temp;
+int cache3[1001];
+int cache4[10001];
+int cache5[100001];
+int pi[10001] = {0, };
 
 int find_min(int a, int b, int c){
     if(a<=b && a<=c) return a;
     else if(b<=a && b<=c) return b;
     else return c;
 }
+void print(vector<int> &a) {
+    for (int x : a) {
+        cout << x << ' ';
+    }
+    cout << '\n';
+}
+int regex(int st, int num){
 
-int match(vector <int> pi, int st, int num){
+//    for(int i = st+1; i<=st+num; i++){
+//        cout << temp[i];
+//    }cout << endl;
     //st, st+1, st..+(num-1) 에서의 규칙
     vector<int> order;
     bool c1 = true, c2= true, c3= true, c4= true, c5= true;
     order.push_back(0);
-    for(int i = st; i< st+num-1; i ++){
-        order.push_back(pi[i+1]-pi[i]);
+    for(int i = st+1; i<= st+num-1; i++){
+//        cout << temp[i+1] <<" "<< temp[i] << " "<< temp[i+1]-temp[i]<<endl;
+        order.push_back(temp[i+1]-temp[i]);
     }
+//    print(order);
     for(int i = 1; i<order.size(); i++) {
         if(c1 && order[i] != 0 ) c1 = false;
         if(c2 && order[i] != 1) c2 = false;
@@ -31,7 +47,7 @@ int match(vector <int> pi, int st, int num){
             if (c5 && order[i] != order[i - 1]) c5 = false;
         }
     }
-
+//    cout << "in?" << endl;
     if(c1) return 1;
     else if(c2) return 2;
     else if(c3) return 2;
@@ -40,96 +56,74 @@ int match(vector <int> pi, int st, int num){
     else return 10;
 }
 
-int main(void){
-//    freopen("input.txt", "r", stdin);
-    int tc;
-    string wc;
-    scanf("%d ",&tc);
-    while(tc-- > 0){
-        string temp;
-        vector<int> input;
-        int pi[10001] = {0, };
-        cin >> temp;
-        //O(n)
-        for(int i = 0; i < temp.length(); i++){
-            if(temp[i] < '0' || temp[i] > '9')
-                break;
-            else input.push_back(temp[i]-'0');
-        }
-        //O(n)
-        for(int i = 0 ; i <input.size(); i++){
-            if(i < 2)
-                pi[i] = 0;
-            else if(i<5){
-                pi[i] = match(input, 0, i+1);
-            }
-            else{
-                int a1 = pi[i-3]+match(input, i-2, 3);
-                int a2 = pi[i-4]+match(input, i-3, 4);
-                int a3 = pi[i-5]+match(input, i-4, 5);
-                pi[i] = find_min(a1, a2, a3);
-            }
-        }
-        cout << pi[temp.length()-1] << endl;
+int match(int index, int digit){
+    int intoNumber = 0;
+//    cout<<"checker1" << endl;
+
+    for(int i = 0; i<digit; i++){
+//        cout<<"checker2" << endl;
+        intoNumber += (temp[index-i] - '0')*pow(10,i);
     }
-    return 0;
+//    cout << "number : " << intoNumber << endl;
+
+    if(digit == 3){
+        if(cache3[intoNumber]) return cache3[intoNumber];
+        else{
+            int result = regex(index-digit, digit);
+            cache3[intoNumber] = result;
+//            cout << "CHECK!!" << result <<endl;
+            return result;
+        }
+    }else if(digit==4){
+        if(cache4[intoNumber]) return cache4[intoNumber];
+        else {
+            int result = regex(index - digit, digit);
+            cache4[intoNumber] = result;
+//            cout << "CHECK!!" << result << endl;
+            return result;
+        }
+    }else{
+        if(cache5[intoNumber]) return cache5[intoNumber];
+        else{
+            int result = regex(index-digit, digit);
+
+            cache5[intoNumber] = result;
+//            cout << "CHECK!!" << result <<endl;
+            return result;
+        }
+    }
+
+
+}
+int solve(){
+    unsigned long length;
+    cin >> temp;
+    length = temp.length();
+    cout << temp << endl;
+    pi[3] = match(2,3);
+    pi[4] = match(3,4);
+    pi[5] = match(4,5);
+    pi[6] = pi[3] + match(5,3);
+    pi[7] = min(pi[4] + match(6,3), pi[3]+match(6,4));
+    for(int index = 6; index < length; index++){
+        pi[index] = find_min(pi[index-5]+match(index, 5), pi[index-4]+match(index,4), pi[index-3]+match(index,3));
+    }
+    for(int i = 1; i<length+1; i++)
+        cout<<pi[i] <<" ";
+    cout << endl;
+
+    return pi[length-1];
 }
 
-//#include<iostream>
-//#include<vector>
-//#include <limits.h>
-//
-//using namespace std;
-//
-//string N;
-//int cache[10002];
-//
-//int classify(int a, int b){
-//    string M = N.substr(a, b-a+1);
-//    //모두 같음
-//    if(M == string(M.size(), M[0])) return 1;
-//    //등차수열
-//    bool progressive = true;
-//    for(int i = 0 ; i < M.size()-1; ++i)
-//        if(M[i+1]-M[i]!=M[1]-M[0])
-//            progressive = false;
-//    //등차수열이고 공차가 1 또는 -1
-//    if(progressive && abs(M[1]-M[0]) == 1)
-//        return 2;
-//    bool alternating = true;
-//    for(int i = 0 ; i< M.size(); ++i)
-//        if(M[i] != M[i%2])
-//            alternating = false;
-//    if(alternating) return 4;
-//    if(progressive) return 5;
-//    return 10;
-//}
-//
-//int memorize(int begin){
-//    cout<< begin;
-//    if(begin == N.size()){
-//        return 0;
-//    }
-//    int& ret = cache[begin];
-//    if(ret != -1){
-//        cout<< "here1"<<endl;
-//        return ret;
-//    }
-//    ret = INT_MAX;
-//    for(int L = 3; L<=5; L++)
-//        if(begin + L <= N.size())
-//            ret = min(ret, memorize(begin+L)+classify(begin, begin+L-1));
-//    return ret;
-//}
-//
-//int main(void){
-//    freopen("input.txt", "r", stdin);
-//    int tc;
-//    scanf("%d ",&tc);
-//    while(tc-- > 0){
-//        memset(cache, 0, 10002);
-//        cin >> N;
-//        cout << memorize(0) << endl;
-//    }
-//    return 0;
-//}
+int main(){
+    freopen("input.txt","r",stdin);
+    cin >> testcase;
+    while(testcase--){
+//        solve();
+        cout << solve() << endl;
+    }
+
+    memset(pi, 0, 10001);
+    return 0;
+
+}
