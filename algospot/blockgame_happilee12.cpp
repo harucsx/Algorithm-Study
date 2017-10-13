@@ -1,138 +1,140 @@
-//
-// Created by HANLEEKYEUNG on 2017. 8. 30..
-// 포기..
-//
-#include<iostream>
+// 답은 나오는데 TIME&MEMORY EXCEED
+
+#include <iostream>
 #include <vector>
-#define FOR(a, num) for(int a=0; a<num; a++)
 using namespace std;
-
-//board
-struct sBoard {
-    int board[6][6];
-    int step;
-};
-
-//변수선언
-int testcase;
-vector<sBoard> boardVec;
-
+//define
+#define CACHEMAX 33554433
+#define FOR(var, num) for(int var=0; var<num; var++)
+//init
+vector<string> board;
+int cache[CACHEMAX];
+void initcache(){
+    FOR(i, CACHEMAX)
+        cache[i] = -2;
+}
 void inputBoard(){
-    sBoard inputBoard;
-    inputBoard.step = 0;
-    char input;
+    string temp;
     FOR(row, 5){
-        FOR(col, 5){
-            scanf("%c", &input);
-            if(input == '.') inputBoard.board[row][col] = 1;
-            else if(input == '#') inputBoard.board[row][col] = 0;
-            else
-                cout << "something wrong on " << row <<" " <<col <<endl;
-        }
-        scanf("\n");
+        cin >> temp;
+        board.push_back(temp);
     }
-    boardVec.push_back(inputBoard);
 }
 void printBoard(){
-    sBoard popBoard = boardVec.back();
+    FOR(row, 5)
+        cout << board[row] << endl;
+}
+int bijection(){
+    int ret = 0;
     FOR(row, 5){
         FOR(col, 5){
-            printf("%d ", popBoard.board[row][col]);
+            ret *= 2;
+            if(board[row][col] == '#') ret++;
         }
-        cout << endl;
     }
-    cout << endl;
-
+    return ret;
 }
+int play(){
+    int& ret = cache[bijection()];
 
-int solve(){
-    sBoard popBoard = boardVec.back();
-//    printBoard();
+    //in the cache
+    if(cache[bijection()]!=-2) return ret;
+
+    bool isFull = true;
     FOR(row, 5){
-        FOR(col, 5) {
-            if(popBoard.board[row][col] == 1){
-
-                // [][] case1
-                if(popBoard.board[row][col+1] == 1){
-                    sBoard newBoard = boardVec.back();
-                    newBoard.board[row][col] = 0;
-                    newBoard.board[row][col+1] = 0;
-                    newBoard.step++;
-                    boardVec.push_back(newBoard);
-                    if(solve()%2 == 1){
+        FOR(col, 5){
+            if(board[row][col] == '.'){
+                board[row][col] = '#';
+                //ㄱ
+                if(col < 4 && row < 4 && board[row][col+1] == '.' && board[row+1][col+1] == '.'){
+                    board[row][col+1] = '#';
+                    board[row+1][col+1] = '#';
+                    ret = max(ret, -play());
+                    board[row][col+1] = '.';
+                    board[row+1][col+1] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
                         return 1;
                     }
-
-                    //[][] case2
-                    //  []
-                    if(popBoard.board[row+1][col+1] == 1){
-                        sBoard newBoard = boardVec.back();
-                        newBoard.board[row][col] = 0;
-                        newBoard.board[row][col+1] = 0;
-                        newBoard.board[row+1][col+1] = 0;
-                        newBoard.step++;
-                        boardVec.push_back(newBoard);
-                        if(solve()%2 == 1){
-                            return 1;
-                        }
+                }
+                //ㄱ 좌우대칭
+                if(col < 4 && row < 4 && board[row][col+1] == '.' && board[row+1][col] == '.'){
+                    board[row][col+1] = '#';
+                    board[row+1][col] = '#';
+                    ret = max(ret, -play());
+                    board[row][col+1] = '.';
+                    board[row+1][col] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
+                        return 1;
+                    }
+                }
+                // -
+                if(col < 4 && board[row][col+1] == '.'){
+                    board[row][col+1] = '#';
+                    ret = max(ret, -play());
+                    board[row][col+1] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
+                        return 1;
+                    }
+                }
+                // ㄴ
+                if(col < 4 && row < 4 && board[row+1][col] == '.' && board[row+1][col+1] == '.'){
+                    board[row+1][col+1] = '#';
+                    board[row+1][col] = '#';
+                    ret = max(ret, -play());
+                    board[row+1][col+1] = '.';
+                    board[row+1][col] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
+                        return 1;
+                    }
+                }
+                // ㄴ좌우대칭
+                if(col > 0 && row < 4 && board[row+1][col] == '.' && board[row+1][col-1] == '.'){
+                    board[row+1][col-1] = '#';
+                    board[row+1][col] = '#';
+                    ret = max(ret, -play());
+                    board[row+1][col-1] = '.';
+                    board[row+1][col] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
+                        return 1;
+                    }
+                }
+                // |
+                if(row < 4 && board[row+1][col] == '.'){
+                    board[row+1][col] = '#';
+                    ret = max(ret, -play());
+                    board[row+1][col] = '.';
+                    if(ret == 1){
+                        board[row][col] = '.';
+                        return 1;
                     }
                 }
 
-                // [] case3
-                // []
-                if(popBoard.board[row+1][col] ==1){
-                    sBoard newBoard = boardVec.back();
-                    newBoard.board[row][col] = 0;
-                    newBoard.board[row+1][col] = 0;
-                    newBoard.step++;
-                    boardVec.push_back(newBoard);
-                    if(solve()%2 == 1){
-                        return 1;
-                    }
-                    // [] case4
-                    // [][]
-                    if(popBoard.board[row+1][col+1] == 1){
-                        sBoard newBoard = boardVec.back();
-                        newBoard.board[row][col] = 0;
-                        newBoard.board[row+1][col] = 0;
-                        newBoard.board[row+1][col+1] = 0;
-                        newBoard.step++;
-                        boardVec.push_back(newBoard);
-                        if(solve()%2 == 1){
-                            return 1;
-                        }
-                    }
-                    //   [] case5
-                    // [][]
-                    if(col != 0 && (popBoard.board[row+1][col-1]==1)){
-                        sBoard newBoard = boardVec.back();
-                        newBoard.board[row][col] = 0;
-                        newBoard.board[row+1][col] = 0;
-                        newBoard.board[row+1][col-1] = 0;
-                        newBoard.step++;
-                        boardVec.push_back(newBoard);
-                        if(solve()%2 == 1){
-                            return 1;
-                        }
-                    }
-                }
+                board[row][col] = '.';
             }
         }
     }
-    boardVec.pop_back();
-    return popBoard.step;
-}
 
+    if(ret == -2) return ret = -1;
+    else return ret;
+}
 int main(){
     freopen("input.txt", "r", stdin);
-    scanf("%d\n", &testcase);
-    while(testcase--){
+    int tc; cin >> tc;
+    initcache(); // init cache with 2;
+    while(tc--) {
+        board.clear();
         inputBoard();
-        cout << "-----[[" << testcase <<"]]--------" <<endl;
-        printBoard();
-        cout << solve() << endl << endl;
-        boardVec.clear();
-    }
-    return 0;
-}
+        int ret = play();
+        if(ret == 1)
+            cout << "WINNING" << endl;
+        else if(ret == -1)
+            cout << "LOSING" << endl;
 
+
+    }
+}
