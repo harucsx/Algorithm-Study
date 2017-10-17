@@ -3,6 +3,7 @@
 //
 
 //https://algospot.com/judge/problem/read/TSP1
+//https://algospot.com/judge/problem/read/TSP2
 
 #include <iostream>
 #include <cstring>
@@ -25,27 +26,13 @@ void inputData(){
 }
 double play2(int here, int visited){
 //    cout << "here: " << here <<" visited : " << bitset<32>(visited) <<endl;
-
     if(visited == (1<<n)-1) return 0;
     double &ret = cache[here][visited];
     if(ret >0) return ret;
     ret = INF;
-
     FOR(next, n){
         if(visited & (1<<next)) continue;
         double cand = distBtwCity[here][next]+play2(next, visited+(1<<next));
-        ret = min(ret, cand);
-    }
-    return ret;
-}
-double play(int here, int visited){
-    if(visited == (1<<n)-1) return 0;
-    double &ret = cache[here][visited];
-    if(ret > -1) return ret;
-    ret = INF;
-    FOR(next, n){
-        if(visited & (1<<next)) continue;
-        double cand = distBtwCity[here][next]+play(next, visited+(1<<next));
         ret = min(ret, cand);
     }
     return ret;
