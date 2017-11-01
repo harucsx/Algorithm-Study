@@ -41,3 +41,6 @@ c++basic/
 # Debug files
 *.dSYM/
 *.su
+
+test/main.cpp
+test/input.txt
