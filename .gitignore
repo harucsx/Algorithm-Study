@@ -6,6 +6,7 @@ cpplint.py
 practice.txt
 cmake-build-debug/
 test/
+apply
 c++basic/
 
 # Object files
