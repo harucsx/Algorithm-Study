@@ -30,7 +30,7 @@ int main() {
 
     for (int i = 2; i <= N; ++i) {
         for (int j = i - 1; j > 0; --j) {
-            if (v[i] > v[j]) {
+            if (v[i] < v[j]) {
                 r[i] = max(r[i], r[j] + 1);
             }
         }
