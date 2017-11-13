@@ -44,7 +44,7 @@ int findSol(int map[20][20], int h, int w) {
 }
 
 int main(int argc, char **argv) {
-    //freopen("sample_input.txt", "r", stdin);
+    //freopen("input.txt", "r", stdin);
     setbuf(stdout, NULL);
 
     int T;
