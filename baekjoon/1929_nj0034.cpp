@@ -26,7 +26,7 @@ int main() {
     }
     for (int l = m; l <= n; ++l) {
         if(!data[l]){
-            cout << l << endl;
+            cout << l << '\n';
         }
     }
     return 0;
