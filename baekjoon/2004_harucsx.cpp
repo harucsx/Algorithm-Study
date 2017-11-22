@@ -3,26 +3,26 @@
 #include <cstring>
 #include <vector>
 #include <climits>
+#include <string>
 #include <algorithm>
 #include <stack>
 #include <cmath>
 #include <list>
+#include <queue>
 
 using namespace std;
 
-void fact(int start, int end, int *n2, int *n5) {
-    for (int i = start; i <= end; ++i) {
-        int result = i;
+void fact(long long int end, int *n2, int *n5) {
+    long long int base = 2;
+    while(base <= end){
+        *n2 += end / base;
+        base *= 2;
+    }
 
-        while (result % 2 == 0) {
-            result /= 2;
-            (*n2)++;
-        }
-
-        while (result % 5 == 0) {
-            result /= 5;
-            (*n5)++;
-        }
+    base = 5;
+    while(base <= end){
+        *n5 += end / base;
+        base *= 5;
     }
 }
 
@@ -38,8 +38,9 @@ int main() {
 
     cin >> N >> M;
 
-    fact(N - M + 1, N, &n2p, &n5p);
-    fact(1, N - M, &n2n, &n5n);
+    fact(N, &n2p, &n5p);
+    fact(M, &n2n, &n5n);
+    fact(N - M, &n2n, &n5n);
 
     cout << min(n2p - n2n, n5p - n5n);
 
