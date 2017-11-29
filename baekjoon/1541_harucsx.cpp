@@ -18,12 +18,27 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    string A, B, C, D;
-    cin >> A >> B >> C >> D;
+    bool minus = false;
+    char op;
+    int result, num;
 
-    A += B;
-    C += D;
+    cin >> num;
+    result = num;
 
-    cout << (atoll(A.c_str()) + atoll(C.c_str()));
+    while (true) {
+        op = -1;
+        cin >> op;
+
+        if (op == '-') minus = true;
+        if (op < 0) break;
+        cin >> num;
+
+        if (minus)
+            result -= num;
+        else
+            result += num;
+    }
+
+    cout << result;
     return 0;
 }

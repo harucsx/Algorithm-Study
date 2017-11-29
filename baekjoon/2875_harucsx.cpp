@@ -18,12 +18,23 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    string A, B, C, D;
-    cin >> A >> B >> C >> D;
+    int N, M, K;
+    int result;
 
-    A += B;
-    C += D;
+    cin >> N >> M >> K;
+    result = min(N / 2, M);
 
-    cout << (atoll(A.c_str()) + atoll(C.c_str()));
+    if (result < M)
+        K -= M - result;
+
+    if (result * 2 < N)
+        K -= N - result * 2;
+
+    if (K < 0) K = 0;
+
+    result -= (K + 2) / 3;
+    if (result < 0) result = 0;
+
+    cout << result;
     return 0;
 }
