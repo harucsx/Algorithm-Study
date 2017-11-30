@@ -9,7 +9,6 @@
 #include <cmath>
 #include <list>
 #include <queue>
-#include <sstream>
 
 using namespace std;
 
@@ -18,12 +17,23 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    string A, B, C, D;
-    cin >> A >> B >> C >> D;
+    int N;
+    int result = -1;
+    vector<pair<int, int> > v;
+    cin >> N;
 
-    A += B;
-    C += D;
+    for (int i = 0; i < N; ++i) {
+        int in;
+        cin >> in;
+        v.push_back(make_pair(in, i));
+    }
 
-    cout << (atoll(A.c_str()) + atoll(C.c_str()));
+    sort(v.begin(), v.end());
+
+    for (int i = 0; i < N; ++i) {
+        result = max(result, v[i].second - i + 1);
+    }
+
+    cout << result;
     return 0;
 }

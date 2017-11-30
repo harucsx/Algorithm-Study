@@ -18,12 +18,26 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    string A, B, C, D;
-    cin >> A >> B >> C >> D;
+    int N;
+    int result = 0;
+    vector<int> v;
 
-    A += B;
-    C += D;
+    cin >> N;
+    v.resize(N);
 
-    cout << (atoll(A.c_str()) + atoll(C.c_str()));
+    for (int i = 0; i < N; ++i) {
+        cin >> v[i];
+    }
+
+    sort(v.begin(), v.end());
+
+    int now = 0;
+
+    for (int i = 0; i < v.size(); ++i) {
+        now += v[i];
+        result += now;
+    }
+
+    cout << result;
     return 0;
 }

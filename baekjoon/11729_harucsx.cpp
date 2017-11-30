@@ -13,17 +13,28 @@
 
 using namespace std;
 
+int n;
+
+void hanoi(int n, int from, int to, int via){
+    if (n == 1){
+        cout << from << ' ' << to << '\n';
+        return;
+    }
+
+    hanoi(n-1, from, via, to);
+    hanoi(1, from, to, via);
+    hanoi(n-1, via, to, from);
+}
+
 int main() {
+    ios::sync_with_stdio(false);
 #ifdef HARUCSX_TEST
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    string A, B, C, D;
-    cin >> A >> B >> C >> D;
+    cin >> n;
+    cout << (int) (pow(2,n) - 0.9) << '\n';
 
-    A += B;
-    C += D;
-
-    cout << (atoll(A.c_str()) + atoll(C.c_str()));
+    hanoi(n, 1, 3, 2);
     return 0;
 }
