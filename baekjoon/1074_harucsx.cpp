@@ -13,28 +13,28 @@
 
 using namespace std;
 
-int n, r, c;
-int cnt;
-int result = -1;
 
-void z(int x, int y, int n) {
-    if (result != -1) return;
-    if (x == c && y == r && n == 1) {
-        result = cnt;
-        return;
+
+int z(int x, int y, int n) {
+    if (n == 2)
+        return x + 2 * y;
+
+    int result = 0;
+    int next_n = n / 2;
+    if (x < next_n && y < next_n) {
+        result += z(x, y, next_n);
+    } else if (x >= next_n && y < next_n) {
+        result += z(next_n - 1, next_n - 1, next_n) + 1;
+        result += z(x - next_n, y, next_n);
+    } else if (x < next_n && y >= next_n) {
+        result += 2 * (z(next_n - 1, next_n - 1, next_n) + 1);
+        result += z(x, y - next_n, next_n);
+    } else if (x >= next_n && y >= next_n) {
+        result += 3 * (z(next_n - 1, next_n - 1, next_n) + 1);
+        result += z(x - next_n, y - next_n, next_n);
     }
 
-    if (n == 1) {
-        cnt++;
-        return;
-    }
-
-    int d = n / 2;
-    z(x, y, d);
-    z(x + d, y, d);
-    z(x, y + d, d);
-    z(x + d, y + d, d);
-
+    return result;
 }
 
 int main() {
@@ -43,8 +43,10 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
+    int n, r, c;
+    int result;
     cin >> n >> r >> c;
-    z(0, 0, (int) (pow(2, n) + 0.1));
+    result = z(c, r, 1 << n);
     cout << result;
     return 0;
 }
